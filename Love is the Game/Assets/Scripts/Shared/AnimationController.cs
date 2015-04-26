@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using Assets.Scripts.Player;
 using UnityEngine;
+using UnityEventAggregator;
 
 namespace Assets.Scripts.Shared
 {
@@ -10,17 +12,21 @@ namespace Assets.Scripts.Shared
         private List<Sprite> _currentAnimation;
         private List<Sprite> _previousAnimation;
 
-        public float FramesPerSeconds;
+        public float FramesPerSecond;
 
         private int _currentFrame;
         private float _timeOnFrame;
+        private float? _previousFramesPerSecond;
 
         void Update()
         {
-            if (_currentAnimation == null) return;
+            if (_currentAnimation == null)
+            {
+                return;
+            }
 
             _timeOnFrame += Time.deltaTime;
-            if (_timeOnFrame >= 1.0 / FramesPerSeconds)
+            if (_timeOnFrame >= 1.0 / FramesPerSecond)
             {
                 _timeOnFrame = 0;
                 _currentFrame++;
@@ -30,8 +36,15 @@ namespace Assets.Scripts.Shared
                     _currentFrame = 0;
                     if (_previousAnimation != null)
                     {
+                        EventAggregator.SendMessage(new AnimationChangedMessage(_previousAnimation, this.gameObject));
                         _currentAnimation = _previousAnimation;
                         _previousAnimation = null;
+
+                        if (_previousFramesPerSecond.HasValue)
+                        {
+                            FramesPerSecond = _previousFramesPerSecond.Value;
+                            _previousFramesPerSecond = null;
+                        }
                     }
                 }
             }
@@ -44,9 +57,15 @@ namespace Assets.Scripts.Shared
             if (isOneShot)
             {
                 _previousAnimation = _currentAnimation;
+                _previousFramesPerSecond = FramesPerSecond;
+            }
+            else
+            {
+                _previousAnimation = null;
+                _previousFramesPerSecond = null;
             }
 
-            FramesPerSeconds = framesPerSecond;
+            FramesPerSecond = framesPerSecond;
 
             _currentAnimation = anim;
             _currentFrame = 0;
