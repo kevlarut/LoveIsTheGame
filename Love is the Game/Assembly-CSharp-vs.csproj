@@ -58,6 +58,7 @@
      <Compile Include="Assets\Scripts\Shared\NonPlayerGameObject.cs" />
      <Compile Include="Assets\Scripts\Shared\UserDefinedAnimation.cs" />
      <Compile Include="Assets\Scripts\UI\Conversation.cs" />
+     <Compile Include="Assets\Scripts\UI\Fade.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
