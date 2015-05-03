@@ -54,6 +54,18 @@ namespace Assets.Scripts.Player
             if (message.GameObject == this.gameObject)
             {
                 var playerState = InferPlayerStateFromAnimation(message.NewAnimation);
+
+                var sortingOrder = 3;
+                if (playerState == PlayerState.Dancing)
+                {
+                    sortingOrder = 5;
+                }
+
+                foreach (var spriteRenderer in GetComponentsInChildren<SpriteRenderer>())
+                {
+                    spriteRenderer.sortingOrder = sortingOrder;
+                }
+
                 EventAggregator.SendMessage(new PlayerStateChangedMessage(playerState));
             }
         }

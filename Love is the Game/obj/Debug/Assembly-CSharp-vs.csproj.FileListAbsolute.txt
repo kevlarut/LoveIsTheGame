@@ -10,6 +10,6 @@ C:\Dev\LoveIsTheGame\Love is the Game\Temp\bin\Debug\Unity.SerializationLogic.dl
 C:\Dev\LoveIsTheGame\Love is the Game\Temp\bin\Debug\Unity.DataContract.dll
 C:\Dev\LoveIsTheGame\Love is the Game\Temp\bin\Debug\ICSharpCode.NRefactory.dll
 C:\Dev\LoveIsTheGame\Love is the Game\Temp\bin\Debug\Unity.CecilTools.dll
-C:\Dev\LoveIsTheGame\Love is the Game\obj\Debug\Assembly-CSharp-vs.csprojResolveAssemblyReference.cache
 C:\Dev\LoveIsTheGame\Love is the Game\obj\Debug\Assembly-CSharp.dll
 C:\Dev\LoveIsTheGame\Love is the Game\obj\Debug\Assembly-CSharp.pdb
+C:\Dev\LoveIsTheGame\Love is the Game\obj\Debug\Assembly-CSharp-vs.csprojResolveAssemblyReference.cache
