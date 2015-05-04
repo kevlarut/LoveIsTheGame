@@ -5,9 +5,12 @@ namespace Assets.Scripts.NPCs
     public class InitiateConversationDialogMessage
     {
         public GameObject GameObject { get; set; }
-        public InitiateConversationDialogMessage(GameObject gameObject)
+        public Sprite Portrait { get; set; }
+
+        public InitiateConversationDialogMessage(GameObject gameObject, Sprite portrait)
         {
             GameObject = gameObject;
+            Portrait = portrait;
         }
     }
 }
