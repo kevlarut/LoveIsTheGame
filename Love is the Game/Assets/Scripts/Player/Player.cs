@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Assets.Scripts.Messages;
 using Assets.Scripts.NPCs;
 using Assets.Scripts.Shared;
 using UnityEngine;
@@ -7,7 +8,7 @@ using UnityEventAggregator;
 
 namespace Assets.Scripts.Player
 {
-    public class Player : MonoBehaviour, IListener<AnimationChangedMessage>, IListener<InitiateConversationDialogMessage>
+    public class Player : MonoBehaviour, IListener<AnimationChangedMessage>, IListener<InitiateConversationDialogMessage>, IListener<EverybodyDanceMessage>
     {
     
         private PlayerState _playerState = PlayerState.Standing;
@@ -24,6 +25,7 @@ namespace Assets.Scripts.Player
             ChangeState(PlayerState.Running);
 
             this.Register<AnimationChangedMessage>();
+			this.Register<EverybodyDanceMessage>();
             this.Register<InitiateConversationDialogMessage>();
         }
 
@@ -38,14 +40,15 @@ namespace Assets.Scripts.Player
                 ChangeState(PlayerState.Running);
             }
             else if (Input.GetKeyDown(KeyCode.D))
-            {
-                ChangeState(PlayerState.Dancing);
+			{
+				EventAggregator.SendMessage(new EverybodyDanceMessage());
             }
         }
 
         void OnDestroy()
         {
             this.UnRegister<AnimationChangedMessage>();
+			this.UnRegister<EverybodyDanceMessage>();
             this.UnRegister<InitiateConversationDialogMessage>();
         }
 
@@ -59,6 +62,7 @@ namespace Assets.Scripts.Player
                 if (playerState == PlayerState.Dancing)
                 {
                     sortingOrder = 5;
+					EventAggregator.SendMessage(new EverybodyDanceMessage());
                 }
 
                 foreach (var spriteRenderer in GetComponentsInChildren<SpriteRenderer>())
@@ -142,5 +146,10 @@ namespace Assets.Scripts.Player
         {
             ReturnToStandingPosition();
         }
+
+	    public void Handle(EverybodyDanceMessage message)
+	    {
+			ChangeState(PlayerState.Dancing);
+	    }
     }
 }

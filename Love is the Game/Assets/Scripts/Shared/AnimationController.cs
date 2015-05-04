@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Assets.Scripts.Player;
+using Assets.Scripts.Messages;
 using UnityEngine;
 using UnityEventAggregator;
 

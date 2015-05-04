@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEventAggregator;
 
 namespace Assets.Scripts.NPCs
@@ -6,6 +7,7 @@ namespace Assets.Scripts.NPCs
     public class Girl : MonoBehaviour
     {
         public Sprite Portrait;
+	    public List<Sprite> ConversationTextSprites;
 
         // Use this for initialization
         void Start () {
@@ -15,7 +17,7 @@ namespace Assets.Scripts.NPCs
         void OnTriggerEnter2D(Collider2D col)
         {
             Debug.Log("OnTriggerEnter2D has occurred.");
-            EventAggregator.SendMessage(new InitiateConversationDialogMessage(this.gameObject, Portrait));
+			EventAggregator.SendMessage(new InitiateConversationDialogMessage(this.gameObject, Portrait, ConversationTextSprites));
         }
 	
         // Update is called once per frame

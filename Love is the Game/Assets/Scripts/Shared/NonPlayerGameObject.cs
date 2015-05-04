@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Player;
+﻿using Assets.Scripts.Messages;
+using Assets.Scripts.Player;
 using UnityEngine;
 using UnityEventAggregator;
 

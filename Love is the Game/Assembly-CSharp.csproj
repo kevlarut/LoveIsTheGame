@@ -46,6 +46,9 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\Messages\AnimationChangedMessage.cs" />
+     <Compile Include="Assets\Scripts\Messages\EverybodyDanceMessage.cs" />
+     <Compile Include="Assets\Scripts\Messages\PlayerStateChangedMessage.cs" />
      <Compile Include="Assets\Scripts\NPCs\Girl.cs" />
      <Compile Include="Assets\Scripts\NPCs\InitiateConversationDialogMessage.cs" />
      <Compile Include="Assets\Scripts\NPCs\Seagull.cs" />
@@ -53,10 +56,8 @@
      <Compile Include="Assets\Scripts\Player\Player.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerAnimations.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerState.cs" />
-     <Compile Include="Assets\Scripts\Player\PlayerStateChangedMessage.cs" />
      <Compile Include="Assets\Scripts\Scene\DoodadSpawner.cs" />
      <Compile Include="Assets\Scripts\Scene\RepeatScroller.cs" />
-     <Compile Include="Assets\Scripts\Shared\AnimationChangedMessage.cs" />
      <Compile Include="Assets\Scripts\Shared\AnimationController.cs" />
      <Compile Include="Assets\Scripts\Shared\NonPlayerGameObject.cs" />
      <Compile Include="Assets\Scripts\Shared\UserDefinedAnimation.cs" />
@@ -64,6 +65,7 @@
      <Compile Include="Assets\Scripts\Spawners\SeagullSpawner.cs" />
      <Compile Include="Assets\Scripts\UI\ColorTransition.cs" />
      <Compile Include="Assets\Scripts\UI\Conversation.cs" />
+     <Compile Include="Assets\Scripts\UI\ConversationSpawner.cs" />
      <Compile Include="Assets\Scripts\UI\Fade.cs" />
      <Compile Include="Assets\Scripts\UI\PsychadelicDanceBackground.cs" />
      <Compile Include="Assets\Scripts\UI\PsychadelicDanceBackgroundAnimations.cs" />
@@ -71,7 +73,7 @@
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="UnityEventAggregator">
- <HintPath>C:/Dev/LoveIsTheGame/Love is the Game/Assets/Lib/UnityEventAggregator.dll</HintPath>
+ <HintPath>Z:/dev/LoveIsTheGame/Love is the Game/Assets/Lib/UnityEventAggregator.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.iOS.Extensions.Xcode">
  <HintPath>C:/Program Files/Unity/Editor/Data/PlaybackEngines/iossupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
