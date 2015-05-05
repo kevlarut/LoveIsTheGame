@@ -59,6 +59,7 @@
      <Compile Include="Assets\Scripts\Scene\DoodadSpawner.cs" />
      <Compile Include="Assets\Scripts\Scene\RepeatScroller.cs" />
      <Compile Include="Assets\Scripts\Shared\AnimationController.cs" />
+     <Compile Include="Assets\Scripts\Shared\Enumerations\RepetitionMode.cs" />
      <Compile Include="Assets\Scripts\Shared\NonPlayerGameObject.cs" />
      <Compile Include="Assets\Scripts\Shared\UserDefinedAnimation.cs" />
      <Compile Include="Assets\Scripts\Spawners\ScheduledOneShotSpawner.cs" />
@@ -73,7 +74,7 @@
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="UnityEventAggregator">
- <HintPath>Z:/dev/LoveIsTheGame/Love is the Game/Assets/Lib/UnityEventAggregator.dll</HintPath>
+ <HintPath>C:/Dev/LoveIsTheGame/Love is the Game/Assets/Lib/UnityEventAggregator.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.iOS.Extensions.Xcode">
  <HintPath>C:/Program Files/Unity/Editor/Data/PlaybackEngines/iossupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>

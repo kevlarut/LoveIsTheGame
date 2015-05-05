@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Assets.Scripts.Messages;
+using Assets.Scripts.Shared.Enumerations;
 using UnityEngine;
 using UnityEventAggregator;
 
@@ -10,13 +11,16 @@ namespace Assets.Scripts.Shared
         public SpriteRenderer SpriteRenderer;
 
         private List<Sprite> _currentAnimation;
-        private List<Sprite> _previousAnimation;
+        private List<Sprite> _animationToPlayAfterThisOne;
+        private List<Sprite> _animationToPlayAfterNextOne;
 
         public float FramesPerSecond;
 
         private int _currentFrame;
         private float _timeOnFrame;
-        private float? _previousFramesPerSecond;
+        private float? _framesPerSecondAfterThisOne;
+        private float? _framesPerSecondAfterNextOne;
+        private RepetitionMode _repetitionMode;
 
         void Update()
         {
@@ -34,16 +38,38 @@ namespace Assets.Scripts.Shared
                 if (_currentFrame >= _currentAnimation.Count)
                 {
                     _currentFrame = 0;
-                    if (_previousAnimation != null)
+                    if (_animationToPlayAfterThisOne != null)
                     {
-                        EventAggregator.SendMessage(new AnimationChangedMessage(_previousAnimation, this.gameObject));
-                        _currentAnimation = _previousAnimation;
-                        _previousAnimation = null;
-
-                        if (_previousFramesPerSecond.HasValue)
+                        if (_repetitionMode != RepetitionMode.Twice)
                         {
-                            FramesPerSecond = _previousFramesPerSecond.Value;
-                            _previousFramesPerSecond = null;
+                            EventAggregator.SendMessage(new AnimationChangedMessage(_animationToPlayAfterThisOne,
+                                                                                    this.gameObject));
+                        }
+                        _currentAnimation = _animationToPlayAfterThisOne;
+
+                        if (_animationToPlayAfterNextOne == null)
+                        {
+                            _animationToPlayAfterThisOne = null;
+                        }
+                        else
+                        {
+                            _animationToPlayAfterThisOne = _animationToPlayAfterNextOne;
+                            _animationToPlayAfterNextOne = null;
+                        }
+
+                        if (_framesPerSecondAfterThisOne.HasValue)
+                        {
+                            FramesPerSecond = _framesPerSecondAfterThisOne.Value;
+
+                            if (_framesPerSecondAfterNextOne == null)
+                            {
+                                _framesPerSecondAfterThisOne = null;
+                            }
+                            else
+                            {
+                                _framesPerSecondAfterThisOne = _framesPerSecondAfterNextOne;
+                                _framesPerSecondAfterNextOne = null;
+                            }
                         }
                     }
                 }
@@ -52,17 +78,30 @@ namespace Assets.Scripts.Shared
             SpriteRenderer.sprite = _currentAnimation[_currentFrame];
         }
 
-        public void PlayAnimation(List<Sprite> anim, float framesPerSecond, bool isOneShot = false)
+        public void PlayAnimation(List<Sprite> anim, float framesPerSecond, RepetitionMode repetitionMode)
         {
-            if (isOneShot)
+            _repetitionMode = repetitionMode;
+
+            switch (repetitionMode)
             {
-                _previousAnimation = _currentAnimation;
-                _previousFramesPerSecond = FramesPerSecond;
-            }
-            else
-            {
-                _previousAnimation = null;
-                _previousFramesPerSecond = null;
+                case RepetitionMode.Once:
+                    _animationToPlayAfterThisOne = _currentAnimation;
+                    _framesPerSecondAfterThisOne = FramesPerSecond;
+                    _animationToPlayAfterNextOne = null;
+                    _framesPerSecondAfterNextOne = null;
+                    break;
+                case RepetitionMode.Twice:
+                    _animationToPlayAfterThisOne = anim;
+                    _framesPerSecondAfterThisOne = framesPerSecond;
+                    _animationToPlayAfterNextOne = _currentAnimation;
+                    _framesPerSecondAfterNextOne = FramesPerSecond;
+                    break;
+                default:
+                    _animationToPlayAfterThisOne = null;
+                    _animationToPlayAfterNextOne = null;
+                    _framesPerSecondAfterThisOne = null;
+                    _framesPerSecondAfterNextOne = null;
+                    break;
             }
 
             FramesPerSecond = framesPerSecond;

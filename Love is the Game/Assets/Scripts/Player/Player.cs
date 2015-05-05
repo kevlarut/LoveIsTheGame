@@ -2,6 +2,7 @@
 using Assets.Scripts.Messages;
 using Assets.Scripts.NPCs;
 using Assets.Scripts.Shared;
+using Assets.Scripts.Shared.Enumerations;
 using UnityEngine;
 using System.Collections;
 using UnityEventAggregator;
@@ -14,7 +15,7 @@ namespace Assets.Scripts.Player
         private PlayerState _playerState = PlayerState.Standing;
         private AnimationController _animationController;
         private PlayerAnimations _animations;
-        private const float DefaultFramesPerSecond = 10f;
+        private const float DefaultFramesPerSecond = 16f;
 
         // Use this for initialization
         void Start ()
@@ -58,16 +59,9 @@ namespace Assets.Scripts.Player
             {
                 var playerState = InferPlayerStateFromAnimation(message.NewAnimation);
 
-                var sortingOrder = 3;
                 if (playerState == PlayerState.Dancing)
                 {
-                    sortingOrder = 5;
 					EventAggregator.SendMessage(new EverybodyDanceMessage());
-                }
-
-                foreach (var spriteRenderer in GetComponentsInChildren<SpriteRenderer>())
-                {
-                    spriteRenderer.sortingOrder = sortingOrder;
                 }
 
                 EventAggregator.SendMessage(new PlayerStateChangedMessage(playerState));
@@ -79,20 +73,20 @@ namespace Assets.Scripts.Player
             _playerState = playerState;
 
             var framesPerSecond = DefaultFramesPerSecond;
-            var isOneShot = false;
+            var repetitionMode = RepetitionMode.Infinite;
             var newAnimation = InferAnimationFromPlayerState(playerState);
 
             switch (playerState)
             {
                 case PlayerState.Dancing:
                     framesPerSecond = 5;
-                    isOneShot = true;
+                    repetitionMode = RepetitionMode.Twice;
                     break;
                 case PlayerState.Running:
                     break;
             }
 
-            _animationController.PlayAnimation(newAnimation, framesPerSecond, isOneShot);
+            _animationController.PlayAnimation(newAnimation, framesPerSecond, repetitionMode);
             EventAggregator.SendMessage(new PlayerStateChangedMessage(playerState));
         }
         
@@ -138,7 +132,7 @@ namespace Assets.Scripts.Player
 
         private void ReturnToStandingPosition()
         {
-            _animationController.PlayAnimation(_animations.Standing, DefaultFramesPerSecond);
+            _animationController.PlayAnimation(_animations.Standing, DefaultFramesPerSecond, RepetitionMode.Infinite);
             EventAggregator.SendMessage(new PlayerStateChangedMessage(PlayerState.Standing));
         }
 

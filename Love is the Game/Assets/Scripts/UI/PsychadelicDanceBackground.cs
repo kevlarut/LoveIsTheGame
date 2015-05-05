@@ -5,6 +5,7 @@ using System.Text;
 using Assets.Scripts.Messages;
 using Assets.Scripts.Player;
 using Assets.Scripts.Shared;
+using Assets.Scripts.Shared.Enumerations;
 using UnityEngine;
 using UnityEventAggregator;
 
@@ -31,7 +32,7 @@ namespace Assets.Scripts.UI
             _animationController = GetComponent<AnimationController>();
             _animations = GetComponent<PsychadelicDanceBackgroundAnimations>();
 
-            _animationController.PlayAnimation(_animations.Flickering, DefaultFramesPerSecond, false);
+            _animationController.PlayAnimation(_animations.Flickering, DefaultFramesPerSecond, RepetitionMode.Infinite);
         }
 
         void OnDestroy()
