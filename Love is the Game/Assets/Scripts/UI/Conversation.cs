@@ -15,10 +15,8 @@ namespace Assets.Scripts.UI
 
 	    private List<Sprite> _textSprites;
 	    private int _currentTextSpriteIndex = 0;
-	    private bool _visible = true;
 	    private float _elapsedTime = 0;
 
-        // Use this for initialization
         void Start () {
             this.Register<InitiateConversationDialogMessage>();
         }
@@ -28,28 +26,25 @@ namespace Assets.Scripts.UI
             this.UnRegister<InitiateConversationDialogMessage>();
         }
 	
-        // Update is called once per frame
         void Update()
         {
-	        if (_visible)
-	        {
-		        _elapsedTime += Time.deltaTime;
-		        if (_elapsedTime > TimeToShowText)
-		        {
-			        if (!ChangeToNextTextSprite())
-					{
-						EventAggregator.SendMessage(new EverybodyDanceMessage());
-						Destroy(gameObject);
-			        }
-
-					_elapsedTime = 0;
-		        }
-
-		        if (Input.GetKeyDown(KeyCode.Space))
+		    _elapsedTime += Time.deltaTime;
+		    if (_elapsedTime > TimeToShowText)
+		    {
+			    if (!ChangeToNextTextSprite())
 				{
+                    EventAggregator.SendMessage(new HaveAHeartMessage());
+					EventAggregator.SendMessage(new EverybodyDanceMessage());
 					Destroy(gameObject);
-		        }
-	        }
+			    }
+
+				_elapsedTime = 0;
+		    }
+
+		    if (Input.GetKeyDown(KeyCode.Space))
+			{
+				Destroy(gameObject);
+		    }
         }
 
 	    private bool ChangeToNextTextSprite()

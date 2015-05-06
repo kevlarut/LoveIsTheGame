@@ -1,15 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Assets.Scripts.Messages;
-using Assets.Scripts.NPCs;
-using Assets.Scripts.Player;
-using Assets.Scripts.UI;
+﻿using Assets.Scripts.NPCs;
 using UnityEngine;
 using UnityEventAggregator;
-using Random = System.Random;
 
-namespace Assets.Scripts.Scene
+namespace Assets.Scripts.UI
 {
 	public class ConversationSpawner : MonoBehaviour, IListener<InitiateConversationDialogMessage>
 	{

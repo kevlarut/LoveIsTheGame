@@ -48,6 +48,7 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\Messages\AnimationChangedMessage.cs" />
      <Compile Include="Assets\Scripts\Messages\EverybodyDanceMessage.cs" />
+     <Compile Include="Assets\Scripts\Messages\HaveAHeartMessage.cs" />
      <Compile Include="Assets\Scripts\Messages\PlayerStateChangedMessage.cs" />
      <Compile Include="Assets\Scripts\NPCs\Girl.cs" />
      <Compile Include="Assets\Scripts\NPCs\InitiateConversationDialogMessage.cs" />
@@ -68,6 +69,7 @@
      <Compile Include="Assets\Scripts\UI\Conversation.cs" />
      <Compile Include="Assets\Scripts\UI\ConversationSpawner.cs" />
      <Compile Include="Assets\Scripts\UI\Fade.cs" />
+     <Compile Include="Assets\Scripts\UI\HeartMeter.cs" />
      <Compile Include="Assets\Scripts\UI\PsychadelicDanceBackground.cs" />
      <Compile Include="Assets\Scripts\UI\PsychadelicDanceBackgroundAnimations.cs" />
  <Reference Include="UnityEngine.UI">
