@@ -1,8 +1,9 @@
 ﻿using Assets.Scripts.NPCs;
+using Assets.Scripts.UI;
 using UnityEngine;
 using UnityEventAggregator;
 
-namespace Assets.Scripts.UI
+namespace Assets.Scripts.Spawners
 {
 	public class ConversationSpawner : MonoBehaviour, IListener<InitiateConversationDialogMessage>
 	{

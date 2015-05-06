@@ -11,7 +11,7 @@ using UnityEventAggregator;
 
 namespace Assets.Scripts.UI
 {
-    public class PsychadelicDanceBackground : MonoBehaviour, IListener<PlayerStateChangedMessage>
+    public class PsychadelicDanceBackground : MonoBehaviour
     {
         public int Speed;
 
@@ -19,7 +19,6 @@ namespace Assets.Scripts.UI
         private PsychadelicDanceBackgroundAnimations _animations;
         private const float DefaultFramesPerSecond = 2.37f;
 
-        private bool _isDancing = false;
         private float _red = 1f;
         private float _green = 0f;
         private float _blue = 0f;
@@ -108,29 +107,10 @@ namespace Assets.Scripts.UI
             }
 
             Color color;
-            if (_isDancing)
-            {
-                color = new Color(_red, _green, _blue);
-            }
-            else
-            {
-                color = new Color(1f, 1f, 1f, 0f);
-            }
+            color = new Color(_red, _green, _blue);
             foreach (var spriteRenderer in GetComponentsInChildren<SpriteRenderer>())
             {
                 spriteRenderer.color = color;
-            }
-        }
-
-        public void Handle(PlayerStateChangedMessage message)
-        {
-            if (message.PlayerState == PlayerState.Dancing)
-            {
-                _isDancing = true;
-            }
-            else
-            {
-                _isDancing = false;
             }
         }
     }
