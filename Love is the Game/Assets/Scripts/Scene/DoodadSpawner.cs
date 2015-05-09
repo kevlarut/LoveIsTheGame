@@ -9,7 +9,7 @@ using Random = System.Random;
 
 namespace Assets.Scripts.Scene
 {
-    class DoodadSpawner : MonoBehaviour, IListener<PlayerStateChangedMessage>
+    class DoodadSpawner : MonoBehaviour, IListener<PlayerIsRunningMessage>, IListener<PlayerIsStillMessage>
     {
         public float MinSpawnDelay;
         public float MaxSpawnDelay;
@@ -22,13 +22,15 @@ namespace Assets.Scripts.Scene
 
         void Start()
         {
-            this.Register<PlayerStateChangedMessage>();
+            this.Register<PlayerIsRunningMessage>();
+            this.Register<PlayerIsStillMessage>();
             _currentSpawnDelay = UnityEngine.Random.Range(MinSpawnDelay, MaxSpawnDelay);
         }
 
         void OnDestroy()
         {
-            this.UnRegister<PlayerStateChangedMessage>();
+            this.UnRegister<PlayerIsRunningMessage>();
+            this.UnRegister<PlayerIsStillMessage>();
         }
 
         void Update()
@@ -63,17 +65,14 @@ namespace Assets.Scripts.Scene
             return Doodads[index];
         }
 
-        public void Handle(PlayerStateChangedMessage message)
+        public void Handle(PlayerIsRunningMessage message)
         {
-            switch (message.PlayerState)
-            {
-                case PlayerState.Running:
-                    _enableSpawning = true;
-                    break;
-                default:
-                    _enableSpawning = false;
-                    break;
-            }
+            _enableSpawning = true;
+        }
+
+        public void Handle(PlayerIsStillMessage message)
+        {
+            _enableSpawning = false;
         }
     }
 }

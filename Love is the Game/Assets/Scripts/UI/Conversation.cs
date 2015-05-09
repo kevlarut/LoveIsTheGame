@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Assets.Scripts.Messages;
 using Assets.Scripts.NPCs;
+using Assets.Scripts.Shared.Enumerations;
 using UnityEngine;
 using UnityEventAggregator;
 
@@ -16,6 +17,7 @@ namespace Assets.Scripts.UI
 	    private List<Sprite> _textSprites;
 	    private int _currentTextSpriteIndex = 0;
 	    private float _elapsedTime = 0;
+        private GirlType _girlType;
 
         void Start () {
             this.Register<InitiateConversationDialogMessage>();
@@ -34,7 +36,7 @@ namespace Assets.Scripts.UI
 			    if (!ChangeToNextTextSprite())
 				{
                     EventAggregator.SendMessage(new HaveAHeartMessage());
-					EventAggregator.SendMessage(new EverybodyDanceMessage());
+					EventAggregator.SendMessage(new EverybodyDanceMessage(_girlType));
 					Destroy(gameObject);
 			    }
 
@@ -86,7 +88,9 @@ namespace Assets.Scripts.UI
 	    }
 
 	    public void LoadConversationFromMessage(InitiateConversationDialogMessage message)
-		{
+	    {
+	        _girlType = message.GirlType;
+
 			_currentTextSpriteIndex = -1;
 			GirlPortrait.sprite = message.Portrait;
 			if (message.ConversationTextSprites.Count > 0)

@@ -5,7 +5,7 @@ using UnityEventAggregator;
 
 namespace Assets.Scripts.Scene
 {
-    public class RepeatScroller : MonoBehaviour, IListener<PlayerStateChangedMessage>
+    public class RepeatScroller : MonoBehaviour, IListener<PlayerIsRunningMessage>, IListener<PlayerIsStillMessage>
     {
         public float Length;
         public float Speed;
@@ -15,7 +15,8 @@ namespace Assets.Scripts.Scene
         // Use this for initialization
         void Start()
         {
-            this.Register<PlayerStateChangedMessage>();
+            this.Register<PlayerIsRunningMessage>();
+            this.Register<PlayerIsStillMessage>();
         }
 	
         // Update is called once per frame
@@ -29,20 +30,18 @@ namespace Assets.Scripts.Scene
 
         void OnDestroy()
         {
-            this.UnRegister<PlayerStateChangedMessage>();
+            this.UnRegister<PlayerIsRunningMessage>();
+            this.UnRegister<PlayerIsStillMessage>();
         }
 
-        public void Handle(PlayerStateChangedMessage message)
+        public void Handle(PlayerIsRunningMessage message)
         {
-            switch (message.PlayerState)
-            {
-                case PlayerState.Running:
-                    _isMoving = true;
-                    break;
-                default:
-                    _isMoving = false;
-                    break;
-            }
+            _isMoving = true;
+        }
+
+        public void Handle(PlayerIsStillMessage message)
+        {
+            _isMoving = false;
         }
 
         private void ResetPositionIfExhausted()

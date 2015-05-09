@@ -9,7 +9,7 @@ using UnityEventAggregator;
 
 namespace Assets.Scripts.Player
 {
-    public class Player : MonoBehaviour, IListener<AnimationChangedMessage>, IListener<InitiateConversationDialogMessage>, IListener<EverybodyDanceMessage>
+    public class Player : MonoBehaviour, IListener<AnimationChangedMessage>, IListener<InitiateConversationDialogMessage>, IListener<EverybodyDanceMessage>, IListener<ThePartyIsOverMessage>
     {
     
         private PlayerState _playerState = PlayerState.Standing;
@@ -28,6 +28,7 @@ namespace Assets.Scripts.Player
             this.Register<AnimationChangedMessage>();
 			this.Register<EverybodyDanceMessage>();
             this.Register<InitiateConversationDialogMessage>();
+            this.Register<ThePartyIsOverMessage>();
         }
 
         // Update is called once per frame
@@ -42,7 +43,7 @@ namespace Assets.Scripts.Player
             }
             else if (Input.GetKeyDown(KeyCode.D))
 			{
-				EventAggregator.SendMessage(new EverybodyDanceMessage());
+				EventAggregator.SendMessage(new EverybodyDanceMessage(GirlType.Atari));
             }
         }
 
@@ -51,6 +52,7 @@ namespace Assets.Scripts.Player
             this.UnRegister<AnimationChangedMessage>();
 			this.UnRegister<EverybodyDanceMessage>();
             this.UnRegister<InitiateConversationDialogMessage>();
+            this.UnRegister<ThePartyIsOverMessage>();
         }
 
         public void Handle(AnimationChangedMessage message)
@@ -61,10 +63,10 @@ namespace Assets.Scripts.Player
 
                 if (playerState == PlayerState.Dancing)
                 {
-					EventAggregator.SendMessage(new EverybodyDanceMessage());
+					EventAggregator.SendMessage(new EverybodyDanceMessage(GirlType.Atari));
                 }
 
-                EventAggregator.SendMessage(new PlayerStateChangedMessage(playerState));
+                //EventAggregator.SendMessage(new PlayerStateChangedMessage(playerState));
             }
         }
 
@@ -76,18 +78,21 @@ namespace Assets.Scripts.Player
             var repetitionMode = RepetitionMode.Infinite;
             var newAnimation = InferAnimationFromPlayerState(playerState);
 
-            switch (playerState)
+            if (playerState == PlayerState.Dancing) {
+                framesPerSecond = 5;
+                repetitionMode = RepetitionMode.Twice;
+            }
+
+            if (playerState == PlayerState.Running)
             {
-                case PlayerState.Dancing:
-                    framesPerSecond = 5;
-                    repetitionMode = RepetitionMode.Twice;
-                    break;
-                case PlayerState.Running:
-                    break;
+                EventAggregator.SendMessage(new PlayerIsRunningMessage());
+            }
+            else
+            {
+                EventAggregator.SendMessage(new PlayerIsStillMessage());
             }
 
             _animationController.PlayAnimation(newAnimation, framesPerSecond, repetitionMode);
-            EventAggregator.SendMessage(new PlayerStateChangedMessage(playerState));
         }
         
         //TODO: Combine the shared logic of this method and the other Inference method
@@ -130,20 +135,25 @@ namespace Assets.Scripts.Player
             return inferredPlayerState;
         }
 
-        private void ReturnToStandingPosition()
+        private void StandStill()
         {
             _animationController.PlayAnimation(_animations.Standing, DefaultFramesPerSecond, RepetitionMode.Infinite);
-            EventAggregator.SendMessage(new PlayerStateChangedMessage(PlayerState.Standing));
+            EventAggregator.SendMessage(new PlayerIsStillMessage());
         }
 
         public void Handle(InitiateConversationDialogMessage message)
         {
-            ReturnToStandingPosition();
+            StandStill();
         }
 
 	    public void Handle(EverybodyDanceMessage message)
 	    {
 			ChangeState(PlayerState.Dancing);
+	    }
+
+	    public void Handle(ThePartyIsOverMessage message)
+        {
+            ChangeState(PlayerState.Running);
 	    }
     }
 }

@@ -29,6 +29,11 @@ namespace Assets.Scripts.NPCs
         void Update()
         {
             transform.Translate(Speed * Time.deltaTime, 0, 0);
+            
+            if (transform.position.x > 8)
+            {
+                Destroy(gameObject);
+            }
         }
     }
 }

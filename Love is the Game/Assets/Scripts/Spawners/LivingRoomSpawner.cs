@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Messages;
 using Assets.Scripts.NPCs;
+using Assets.Scripts.Scene;
 using Assets.Scripts.UI;
 using UnityEngine;
 using UnityEventAggregator;
@@ -26,7 +27,10 @@ namespace Assets.Scripts.Spawners
 
 	    public void Handle(EverybodyDanceMessage message)
         {
-            Instantiate(GameObject);
-	    }
+            var newGameObject = Instantiate(GameObject);
+	        var livingRoom = newGameObject.GetComponent<LivingRoom>();
+            var couchBox = livingRoom.GetComponentInChildren<CouchBox>();
+	        couchBox.LoadCouchBoxAnimation(message.GirlType);
+        }
 	}
 }

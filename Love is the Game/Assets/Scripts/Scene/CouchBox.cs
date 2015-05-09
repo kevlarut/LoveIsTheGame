@@ -14,13 +14,19 @@ namespace Assets.Scripts.Scene
 
         private AnimationController _animationController;
         private CouchBoxAnimations _animations;
+        private List<Sprite> _currentAnimation;
 
         void Start()
         {
             _animationController = GetComponent<AnimationController>();
             _animations = GetComponent<CouchBoxAnimations>();
 
-            _animationController.PlayAnimation(_animations.Nintendo, FramesPerSecond, RepetitionMode.Infinite);
+            if (_currentAnimation == null)
+            {
+                _currentAnimation = _animations.Nintendo;
+            }
+
+            _animationController.PlayAnimation(_currentAnimation, FramesPerSecond, RepetitionMode.Infinite);
         }
 
         void Update()
@@ -29,6 +35,27 @@ namespace Assets.Scripts.Scene
 
         void OnDestroy()
         {
+        }
+
+        public void LoadCouchBoxAnimation(GirlType girl)
+        {
+            var animations = GetComponent<CouchBoxAnimations>();
+
+            switch (girl)
+            {
+                case GirlType.Atari:
+                    _currentAnimation = animations.Atari;
+                    break;
+                case GirlType.Nintendo:
+                    _currentAnimation = animations.Nintendo;
+                    break;
+                case GirlType.Sega:
+                    _currentAnimation = animations.Sega;
+                    break;
+                default:
+                    _currentAnimation = animations.Xbox;
+                    break;
+            }
         }
     }
 }

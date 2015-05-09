@@ -49,7 +49,9 @@
      <Compile Include="Assets\Scripts\Messages\AnimationChangedMessage.cs" />
      <Compile Include="Assets\Scripts\Messages\EverybodyDanceMessage.cs" />
      <Compile Include="Assets\Scripts\Messages\HaveAHeartMessage.cs" />
-     <Compile Include="Assets\Scripts\Messages\PlayerStateChangedMessage.cs" />
+     <Compile Include="Assets\Scripts\Messages\PlayerIsRunningMessage.cs" />
+     <Compile Include="Assets\Scripts\Messages\PlayerIsStillMessage.cs" />
+     <Compile Include="Assets\Scripts\Messages\ThePartyIsOverMessage.cs" />
      <Compile Include="Assets\Scripts\NPCs\Girl.cs" />
      <Compile Include="Assets\Scripts\NPCs\InitiateConversationDialogMessage.cs" />
      <Compile Include="Assets\Scripts\NPCs\Seagull.cs" />
@@ -58,11 +60,14 @@
      <Compile Include="Assets\Scripts\Player\Player.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerAnimations.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerState.cs" />
+     <Compile Include="Assets\Scripts\Scene\ChorusExpirationTimer.cs" />
      <Compile Include="Assets\Scripts\Scene\CouchBox.cs" />
      <Compile Include="Assets\Scripts\Scene\CouchBoxAnimations.cs" />
      <Compile Include="Assets\Scripts\Scene\DoodadSpawner.cs" />
+     <Compile Include="Assets\Scripts\Scene\LivingRoom.cs" />
      <Compile Include="Assets\Scripts\Scene\RepeatScroller.cs" />
      <Compile Include="Assets\Scripts\Shared\AnimationController.cs" />
+     <Compile Include="Assets\Scripts\Shared\Enumerations\GirlType.cs" />
      <Compile Include="Assets\Scripts\Shared\Enumerations\RepetitionMode.cs" />
      <Compile Include="Assets\Scripts\Shared\NonPlayerGameObject.cs" />
      <Compile Include="Assets\Scripts\Shared\UserDefinedAnimation.cs" />

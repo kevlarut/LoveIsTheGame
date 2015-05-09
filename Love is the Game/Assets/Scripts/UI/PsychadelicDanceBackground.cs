@@ -26,8 +26,6 @@ namespace Assets.Scripts.UI
 
         void Start()
         {
-            this.Register<PlayerStateChangedMessage>(); 
-            
             _animationController = GetComponent<AnimationController>();
             _animations = GetComponent<PsychadelicDanceBackgroundAnimations>();
 
@@ -36,7 +34,6 @@ namespace Assets.Scripts.UI
 
         void OnDestroy()
         {
-            this.UnRegister<PlayerStateChangedMessage>();
         }
 
         void Update()
