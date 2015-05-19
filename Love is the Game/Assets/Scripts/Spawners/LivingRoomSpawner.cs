@@ -29,8 +29,12 @@ namespace Assets.Scripts.Spawners
         {
             var newGameObject = Instantiate(GameObject);
 	        var livingRoom = newGameObject.GetComponent<LivingRoom>();
+
             var couchBox = livingRoom.GetComponentInChildren<CouchBox>();
 	        couchBox.LoadCouchBoxAnimation(message.GirlType);
+
+            var televisionSetAndConsole = livingRoom.GetComponentInChildren<TelevisionSetAndConsole>();
+            televisionSetAndConsole.LoadSprite(message.GirlType);
         }
 	}
 }
